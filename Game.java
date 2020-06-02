@@ -12,6 +12,8 @@ public class Game {
 
       final int randNum = createRandomNumber();
 
+      System.out.println("================================");
+
       System.out.println("You shouldn't cheat: " + randNum); // cheating
 
       int userGuess = getUserInput();
@@ -37,7 +39,7 @@ public class Game {
     System.out.println("Enter an number between 1 and 100 or Q to quit: ");
     String input = in.nextLine();
     int guess = 0;
-    if (input.equalsIgnoreCase("q")) {
+    if (input.equalsIgnoreCase("q") || input.equalsIgnoreCase("")) {
       System.out.println("Goodbye!");
       System.exit(0);
     } else {
@@ -63,8 +65,15 @@ public class Game {
       return true;
     } else {
       attempts++;
-      System.out.println("Guess Again");
+
+      if (guess < rand) {
+        System.out.println("You guessed too low, guess Again");
+      } else if (guess > rand) {
+        System.out.println("You guessed too high, guess Again");
+      }
+
       System.out.println("Number of attempts: " + attempts);
+      System.out.println("================================");
       return false;
     }
   }
