@@ -22,4 +22,11 @@ public class GameTest {
     int guess = Game.getUserInput(50);
     Assert.assertTrue(guess <= 100 && guess >= 1);
   }
+
+  @Test
+  public final void testIfUserGuessedCorrectly() {
+    int guess = Game.getUserInput(50);
+    Assert.assertEquals(false, Game.guessIsCorrect(45, guess));
+    Assert.assertEquals(true, Game.guessIsCorrect(50, guess));
+  }
 }
