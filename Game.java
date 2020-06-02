@@ -2,15 +2,30 @@ import java.util.Scanner;
 
 public class Game {
 
+  static Scanner in = new Scanner(System.in);
+
   public static void main(String[] args) {
 
-    final int randNum = createRandomNumber();
-    System.out.println(randNum); // cheating
-    int userGuess = getUserInput();
+    String repeat = "y";
 
-    while (!Game.guessIsCorrect(userGuess, randNum)) {
-      userGuess = getUserInput();
+    while (repeat.equalsIgnoreCase("y")) {
+
+      final int randNum = createRandomNumber();
+
+      System.out.println("You shouldn't cheat: " + randNum); // cheating
+
+      int userGuess = getUserInput();
+
+      while (!Game.guessIsCorrect(userGuess, randNum)) {
+        userGuess = getUserInput();
+      }
+
+      System.out.println("Play again? Y/N ");
+      repeat = in.nextLine();
+
     }
+
+    in.close();
 
   }
 
@@ -19,12 +34,19 @@ public class Game {
   }
 
   public static int getUserInput() {
-    Scanner in = new Scanner(System.in);
-    System.out.println("Enter an number between 1 and 100: ");
-    int guess = in.nextInt();
+    System.out.println("Enter an number between 1 and 100 or Q to quit: ");
+    String input = in.nextLine();
+    int guess = 0;
+    if (input.equalsIgnoreCase("q")) {
+      System.out.println("Goodbye!");
+      System.exit(0);
+    } else {
+      guess = Integer.parseInt(input);
+    }
+
     while (guess > 100 || guess < 1) {
       System.out.println("Please enter a valid number");
-      guess = in.nextInt();
+      guess = Integer.parseInt(in.nextLine());
     }
     return guess;
   }
@@ -35,11 +57,14 @@ public class Game {
   }
 
   public static boolean guessIsCorrect(int guess, int rand) {
+    int attempts = 0;
     if (guess == rand) {
       System.out.println("You Guessed Correctly!");
       return true;
     } else {
+      attempts++;
       System.out.println("Guess Again");
+      System.out.println("Number of attempts: " + attempts);
       return false;
     }
   }
